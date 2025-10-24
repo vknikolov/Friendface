@@ -5,11 +5,13 @@
 //  Created by Veselin Nikolov on 23.10.25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct PersonDetail: View {
     let person: Person
     let iso = ISO8601DateFormatter()
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
         ScrollView {
@@ -60,10 +62,8 @@ struct PersonDetail: View {
                             .foregroundColor(.purple)
                             .underline()
                             .onTapGesture {
-                                if let url = URL(
-                                    string: "mailto:\(person.email)"
-                                ) {
-                                    UIApplication.shared.open(url)
+                                if let url = URL(string: "mailto:\(person.email)") {
+                                    openURL(url)
                                 }
                             }
                     }
@@ -126,7 +126,6 @@ struct PersonDetail: View {
     }
 }
 
-// Reusable Components for Styling
 struct InfoRow: View {
     let imageName: String
     let text: String
@@ -169,8 +168,8 @@ struct SectionHeader: View {
             "Passionate iOS developer who loves Swift and good coffee. Enjoys hiking and cats.",
         registered: "2023-06-01",
         tags: [
-            "swift", "ios", "developer", "coffee", "swift", "ios", "developer",
-            "coffee",
+            "swift", "ios", "developer", "coffee", "swift's", "ios's", "developer's",
+            "coffee's",
         ],
         friends: [
             Friend(id: "f1", name: "Alex"), Friend(id: "f2", name: "Maya"),
